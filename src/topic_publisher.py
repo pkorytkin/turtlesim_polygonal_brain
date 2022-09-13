@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from dis import dis
 import math
-from multiprocessing.dummy import Array
 import rospy
 import geometry_msgs.msg
 import turtlesim.msg
@@ -26,8 +24,6 @@ class Vector3(geometry_msgs.msg.Vector3):
             return Vector3(self.x*other,self.y*other,self.z*other)
     def __str__(self) -> str:
         return "x:"+str(self.x)+" y:"+str(self.y)+" z:"+str(self.z)
-    #def convertToMSG(self):
-    #    return geometry_msgs.msg.Vector3(self.x,self.y,self.z)
     def Module(self):
         return float(math.sqrt((self.x)**2+(self.y)**2+(self.z)**2))
     
@@ -65,16 +61,13 @@ def Angle3D(fromVector:Vector3,toVector:Vector3):
     
     fromVector=fromVector.normalize()
     toVector=toVector.normalize()
-    
-
-    
     fromVectorAngle=math.atan2(fromVector.y,fromVector.x)
     toVectorAngle=math.atan2(toVector.y,toVector.x)
     
     print("from="+str(fromVectorAngle)+" to="+str(toVectorAngle))
     angle= abs(toVectorAngle-fromVectorAngle)
     if(toVectorAngle<fromVectorAngle):
-        angle*=-1
+        return -angle
     return angle
     
     #angle=math.atan2(CrossProduct(fromVector,toVector),DotProduct(fromVector,toVector))
@@ -85,19 +78,16 @@ def Angle3D(fromVector:Vector3,toVector:Vector3):
     #if (fromVector.x*toVector.y-fromVector.y*toVector.x<0):
     #    sign=-1
     #angle=sign*math.acos(fromVector*toVector/(DistanceVector3(fromVector)*DistanceVector3(toVector))).real
-    
-    
-    
     """while angle>math.pi*2:
         angle-=math.pi*2
     while angle<-math.pi*2:
-        angle+=math.pi*2"""
+        angle+=math.pi*2
     
     if(angle>math.pi):
         angle-=math.pi*2
     if(angle<-math.pi):
         angle+=math.pi*2
-    return angle
+    return angle"""
 #Преобразование локальной позиции черепахи в мировую
 def LocalPositionToWorld(Vector:Vector3):
     return CurrentPosition()+Vector
@@ -130,7 +120,6 @@ def subscriber_pose(pose:turtlesim.msg.Pose):
         StartPose=pose
         StartPoseSaved=True
     #Сохранение нынешней позиции
-    
     CurrentPose=pose
     #print("Saved CurrentPose="+str(pose))
     pass
@@ -138,12 +127,9 @@ def PrepareGlobals():
     global StartPoseSaved
     global CurrentPose
     global StartPose
-    global twist
-    global CurrentPointID
     global r
     StartPose=turtlesim.msg.Pose()
     #Нужно сохранить стартовую позицию
-    global StartPoseSaved
     StartPoseSaved=False
     
     CurrentPose=turtlesim.msg.Pose()
@@ -196,8 +182,6 @@ def Worker():
                 CurrentPointID+=1
                 if(CurrentPointID==PointsCount):
                     CurrentPointID=0
-        
-        
         pub.publish(twist)
         print(twist)
         r.sleep()
@@ -208,12 +192,7 @@ if __name__ == '__main__':
     try:
         
         PrepareWorkers()
-        
-        
-        
-
         #Заготавливаем точки маршрута
-        
         currentPosition=CurrentPosition()
         i:int=0
         tempVector=Vector3
