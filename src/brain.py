@@ -5,6 +5,7 @@ import rospy
 import geometry_msgs.msg
 import turtlesim.msg
 import math
+
 from typing import List
 class Vector3(geometry_msgs.msg.Vector3):
     def __init__(self,x:float=0,y:float=0,z:float=0):
@@ -147,7 +148,10 @@ def PrepareWorkers():
     sub=rospy.Subscriber("turtle1/pose",turtlesim.msg.Pose,tcp_nodelay=True,queue_size=1,callback=subscriber_pose)
 
     pub=rospy.Publisher("turtle1/cmd_vel",geometry_msgs.msg.Twist,tcp_nodelay=True,queue_size=1)
-
+    #Спим несколько раз чтоб дождаться позиции в subscriber
+    r.sleep()
+    r.sleep()
+    r.sleep()
     r.sleep()
 
 def Worker():

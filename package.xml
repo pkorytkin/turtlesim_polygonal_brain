@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>ros_repo1</name>
-  <version>0.0.0</version>
-  <description>The test_package package</description>
+  <name>turtlesim_polygonal_brain</name>
+  <version>1.0.0</version>
+  <description>This package allows the turtlesim_node to move around a polyhedron with a given number of sides. Python 3.8+</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <!-- Example:  -->
   <!-- <maintainer email="jane.doe@example.com">Jane Doe</maintainer> -->
-  <maintainer email="playerbook@todo.todo">playerbook</maintainer>
+  <maintainer email="name@mail.mail">playerbook</maintainer>
 
 
   <!-- One license tag required, multiple allowed, one license per tag -->
