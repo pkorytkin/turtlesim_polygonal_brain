@@ -2,6 +2,8 @@
 
 This package allows the turtlesim_node to move around a polyhedron with a given number of sides. **Python 3.8+**
 
+**Helper commands if it does not find this package:**
+
 echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
 
 source ~/.bashrc
